@@ -1,0 +1,137 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Aliasys Portal</title>
+    <link href="~/img/logo/favicon.ico" rel="shortcut icon" asp-append-version="true">
+    <link href="~/img/logo/apple-touch-icon.png" rel="apple-touch-icon" asp-append-version="true">
+
+    <!-- ################################### Styles ################################### -->
+    @{
+        if (IsSectionDefined("Styles"))
+        {
+            @await RenderSectionAsync("Styles", false)
+        }
+        else
+        {
+            #region Styles
+            <link asp-append-version="true" href="~/lib/dashboard/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+            <link asp-append-version="true" href="~/lib/dashboard/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+            <link asp-append-version="true" href="~/lib/dashboard/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+            <link asp-append-version="true" href="~/lib/dashboard/vendor/quill/quill.snow.css" rel="stylesheet">
+            <link asp-append-version="true" href="~/lib/dashboard/vendor/quill/quill.bubble.css" rel="stylesheet">
+            <link asp-append-version="true" href="~/lib/dashboard/vendor/remixicon/remixicon.css" rel="stylesheet">
+            <link asp-append-version="true" href="~/lib/dashboard/vendor/simple-datatables/style.css" rel="stylesheet">
+            <link asp-append-version="true" href="~/lib/fontawesome/css/font-awesome-4.7.css" rel="stylesheet">
+            <link asp-append-version="true" href="~/lib/bootstrap-datetimepicker/css/tempusdominus-bootstrap.min.css" rel="stylesheet">
+            <link asp-append-version="true" href="~/lib/dashboard/css/style.css" rel="stylesheet">
+            <link asp-append-version="true" href="~/css/style.css" rel="stylesheet">
+            @await RenderSectionAsync("CustomStyles", false)
+            #endregion
+        }
+    }
+</head>
+
+<body class="portal">
+    <!-- ################################### Header ################################### -->
+    <header id="header" class="header fixed-top d-flex align-items-center">
+        @if (IsSectionDefined("Header"))
+        {
+            @await RenderSectionAsync("Header", false)
+        }
+        else
+        {
+            @*<partial name="~/Areas/Portal/Views/Shared/_PartialHeaderPortal.cshtml" />*@
+            @await Html.PartialAsync("~/Areas/Portal/Views/Shared/_PartialHeaderPortal.cshtml")
+        }
+    </header>
+
+    <!-- ################################### Aside ################################### -->
+    <aside id="sidebar" class="sidebar">
+        @if (IsSectionDefined("Aside"))
+        {
+            @await RenderSectionAsync("Aside", false)
+        }
+        else
+        {
+            @*<partial name="_PartialAsidePortal" />*@
+            @await Html.PartialAsync("~/Areas/Portal/Views/Shared/_PartialAsidePortal.cshtml")
+        }
+    </aside>
+
+    <!-- ################################### Main ################################### -->
+    <main id="main" class="main" style="margin-bottom: 50px;">
+        @if (IsSectionDefined("Main"))
+        {
+            @await RenderSectionAsync("Main", false)
+        }
+        else
+        {
+            @RenderBody()
+        }
+    </main>
+
+    <!-- ################################### Footer ################################### -->
+    <footer id="footer" class="footer">
+        @if (IsSectionDefined("Footer"))
+        {
+            @await RenderSectionAsync("Footer", false)
+        }
+        else
+        {
+            @*<partial name="~/Areas/Portal/Views/Shared/_PartialFooterPortal.cshtml" />*@
+            @await Html.PartialAsync("~/Areas/Portal/Views/Shared/_PartialFooterPortal.cshtml")
+        }
+    </footer>
+
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+    <!-- ################################### Modal ################################### -->
+    @{
+        if (IsSectionDefined("Modal"))
+        {
+            @await RenderSectionAsync("Modal", false)
+        }
+        else
+        {
+            //<partial name="_PartialModal" />
+            @await Html.PartialAsync("~/Views/Shared/_PartialModal.cshtml")
+        }
+    }
+
+    <!-- ################################### Scripts ################################### -->
+    @{
+        if (IsSectionDefined("Scripts"))
+        {
+            @await RenderSectionAsync("Scripts", false)
+        }
+        else
+        {
+            #region Scripts
+            <script asp-append-version="true" src="~/lib/jquery/jquery.min.js"></script>
+            <script asp-append-version="true" src="~/lib/bootstrap-datetimepicker/js/popper.min.js"></script>
+            <script asp-append-version="true" src="~/lib/dashboard/vendor/apexcharts/apexcharts.min.js"></script>
+            <script asp-append-version="true" src="~/lib/dashboard/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+            <script asp-append-version="true" src="~/lib/dashboard/vendor/chart.js/chart.umd.js"></script>
+            <script asp-append-version="true" src="~/lib/dashboard/vendor/echarts/echarts.min.js"></script>
+            <script asp-append-version="true" src="~/lib/dashboard/vendor/quill/quill.min.js"></script>
+            <script asp-append-version="true" src="~/lib/dashboard/vendor/simple-datatables/simple-datatables.js"></script>
+            <script asp-append-version="true" src="~/lib/dashboard/vendor/tinymce/tinymce.min.js"></script>
+            <script asp-append-version="true" src="~/lib/fontawesome/js/all.min.js"></script>
+            <script asp-append-version="true" src="~/lib/sweetalert2/sweetalert2.all.min.js"></script>
+            <script asp-append-version="true" src="~/lib/bootstrap-datetimepicker/js/moment-with-locales.min.js"></script>
+            <script asp-append-version="true" src="~/lib/bootstrap-datetimepicker/js/tempusdominus-bootstrap.min.js"></script>
+            <script asp-append-version="true" src="~/lib/dashboard/js/main.js"></script>
+            <script asp-append-version="true" src="~/js/script.js" type="text/javascript"></script>
+            @await RenderSectionAsync("CustomScripts", false)
+            #endregion
+        }
+    }
+
+    <!-- ################################### Loader ################################### -->
+    <partial name="~/Views/Shared/_PartialModalLoader.cshtml" />
+
+</body>
+</html>

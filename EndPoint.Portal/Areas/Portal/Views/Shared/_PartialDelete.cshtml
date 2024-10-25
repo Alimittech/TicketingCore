@@ -1,0 +1,16 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model int
+
+<form asp-route="@ViewBag.RouteAction" asp-route-Id="@Model" onsubmit="return jQueryAjaxPost(this);">
+    <div class="form-group">
+        <span>Are you sure you want to delete this item?</span>
+        <br />
+        <br />
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="mr-1 shadow-z-2 btn btn-danger" onclick="jQuery.validator.unobtrusive.parse(form); " tabindex="1">Delete</button>
+        <button type="button" class="mr-1 shadow-z-2 btn btn-secondary" data-bs-dismiss="modal" tabindex="2">Cancel</button>
+    </div>
+</form>
+
+

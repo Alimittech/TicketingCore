@@ -1,0 +1,100 @@
+﻿@font-face {
+    font-family: 'exo';
+    src: url('../font/exo/Exo2-Medium.eot?#') format('eot'), url('../font/exo/Exo2-Medium.woff') format('woff'), url('../font/exo/Exo2-Medium.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'exo-bold';
+    src: url('../font/exo/Exo2-Bold.eot?#') format('eot'), url('../font/exo/Exo2-Bold.woff') format('woff'), url('../font/exo/Exo2-Bold.ttf') format('truetype');
+}
+
+body {
+    overflow: hidden;
+    background: -webkit-linear-gradient(#eef2f3, #8e9eab);
+    background: linear-gradient(#eef2f3, #8e9eab);
+    font-family: exo !important;
+}
+
+.bg-btm {
+    width: 105%;
+    height: 100%;
+    position: absolute;
+    top: 400px;
+    bottom: 0;
+    left: 0px;
+    background: -webkit-linear-gradient(to right, #00b6be, #9e005d);
+    background: linear-gradient(to right, #00b6be, #9e005d);
+    border-radius: 200px 200px 0 0;
+    transform: rotate(-10deg);
+    opacity: 1;
+}
+
+div.auth .card {
+    max-width: 480px;
+    width: 480px;
+    background: #fff !important;
+    box-shadow: 0 24px 64px #26214a1a !important;
+    border-radius: 12px !important;
+    padding: 5px 30px !important;
+}
+
+    div.auth .card label {
+        font-size: 13px !important;
+        font-weight: 500;
+        line-height: 11px;
+        display: block;
+        color: #292d34;
+    }
+
+    div.auth .card input {
+    }
+
+        div.auth .card input#username {
+            background: url("/img/icon/user-icon.svg");
+            background-position: 5px;
+            background-repeat: no-repeat;
+            background-size: 20px;
+            padding: 7px 30px;
+        }
+
+        div.auth .card input#password {
+            background: url("/img/icon/lock-icon.svg");
+            background-position: 7px;
+            background-repeat: no-repeat;
+            background-size: 18px;
+            padding: 7px 30px;
+        }
+
+    div.auth .card button {
+        height: 50px;
+        background: #00b6be;
+    }
+
+        div.auth .card button:active {
+            background: #9e005d !important;
+        }
+
+div.auth div.auth-logo {
+    position: absolute;
+    top: 40px;
+    left: 40px;
+}
+
+div.auth div.auth-footer {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    text-align: center;
+    color: lightgray;
+}
+
+#footer {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.2em;
+    color: white;
+    position: fixed;
+    -webkit-transform: translate(95vw,90vh);
+    -moz-transform: translate(95vw,90vh);
+    transform: translate(95vw,90vh);
+    transform: translate(95vw,90vh);
+}

@@ -1,0 +1,142 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using Aliasys.Common.Dtos
+@using EndPoint.Portal.Areas.Portal.ViewComponents.Organization;
+@using EndPoint.Portal.Areas.Portal.ViewComponents.OperationUnit;
+@using EndPoint.Portal.Areas.Portal.ViewComponents.Position;
+@{
+    ViewData["Title"] = "Organization Management";
+    Layout = "~/Areas/Portal/Views/Shared/_LayoutPortal.cshtml";
+}
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title fw-bold">Organization Management</h5>
+        <ul class="nav nav-tabs nav-tabs-bordered d-flex" id="borderedTabJustified" role="tablist">
+            <li class="nav-item flex-fill" role="presentation">
+                <button class="nav-link w-100 active" id="organization-tab" data-bs-toggle="tab" data-bs-target="#organization" type="button" role="tab" aria-controls="organization" aria-selected="true" tabindex="-1">Organization</button>
+            </li>
+            <li class="nav-item flex-fill" role="presentation">
+                <button class="nav-link w-100" id="operationUnit-tab" data-bs-toggle="tab" data-bs-target="#operation-unit" type="button" role="tab" aria-controls="operationUnits" aria-selected="false">Operation Unit</button>
+            </li>
+            <li class="nav-item flex-fill" role="presentation">
+                <button class="nav-link w-100" id="position-tab" data-bs-toggle="tab" data-bs-target="#position" type="button" role="tab" aria-controls="position" aria-selected="false" tabindex="-1">Position</button>
+            </li>
+        </ul>
+
+        <div class="tab-content pt-2" id="borderedTabJustifiedContent">
+            <!-- Organization-Tab -->
+            <div class="tab-pane fade active show" id="organization" role="tabpanel" aria-labelledby="organization-tab">
+                <div class="row mb-1 mt-4">
+                    <div class="col-lg-3 col-md-3 col-sm-6">
+                        <a id="orgNewOrganization" class="btn btn-success" onclick="showInPopup('@Url.RouteUrl("createOrganization", null,Context.Request.Scheme)','New Organization', 'Create', 'Large')">
+                            <i class="fa fa-plus" aria-hidden="true"></i>
+                            New Organization
+                        </a>
+                    </div>
+                </div>
+                <div class="row mb-3 mt-3">
+                    <div class="datatable-wrapper datatable-loading no-footer sortable searchable fixed-columns">
+                        <div class="datatable-top">
+                            <div class="datatable-dropdown">
+                                <label>
+                                    <select class="form-select">
+                                        <option value="5">5</option>
+                                        <option value="10">10</option>
+                                        <option value="15">15</option>
+                                        <option value="20">20</option>
+                                    </select>
+                                </label>
+                            </div>
+                            <div class="datatable-search">
+                                <input class="form-control" placeholder="Search..." type="search" title="Search within table">
+                            </div>
+                        </div>
+                        <div class="datatable-container" id="DataTableOrganization">
+                            @await Component.InvokeAsync(typeof(DataTableOrganizationViewComponent), new { ViewBag.searchKey, ViewBag.page, ViewBag.pageSize })
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- OperationUnit-Tab -->
+            <div class="tab-pane fade" id="operation-unit" role="tabpanel" aria-labelledby="operationUnit-tab">
+                <div class="row mb-1 mt-4">
+                    <div class="col-lg-3 col-md-3 col-sm-6">
+                        <a id="ouNewOperationUnit" class="btn btn-success" onclick="showInPopup('@Url.RouteUrl("createOperationUnit", null,Context.Request.Scheme)','New Operation Unit', 'Create', 'Medium')">
+                            <i class="fa fa-plus" aria-hidden="true"></i>
+                            New Operation Unit
+                        </a>
+                    </div>
+                </div>
+                <div class="row mb-3 mt-3">
+                    <div class="datatable-wrapper datatable-loading no-footer sortable searchable fixed-columns">
+                        <div class="datatable-top">
+                            <div class="datatable-dropdown">
+                                <label>
+                                    <select class="form-select">
+                                        <option value="5">5</option>
+                                        <option value="10">10</option>
+                                        <option value="15">15</option>
+                                        <option value="20">20</option>
+                                    </select>
+                                </label>
+                            </div>
+                            <div class="datatable-search">
+                                <input class="form-control" placeholder="Search..." type="search" title="Search within table">
+                            </div>
+                        </div>
+                        <div class="datatable-container" id="DataTableOperationUnit">
+                            @await Component.InvokeAsync(typeof(DataTableOperationUnitViewComponent), new { ViewBag.searchKey, ViewBag.page, ViewBag.pageSize })
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Position-Tab -->
+            <div class="tab-pane fade" id="position" role="tabpanel" aria-labelledby="position-tab">
+                <div class="row mb-1 mt-4">
+                    <div class="col-lg-3 col-md-3 col-sm-6">
+                        <a id="posNewPosition" class="btn btn-success" onclick="showInPopup('@Url.RouteUrl("createPosition", null,Context.Request.Scheme)','New Position', 'Create', 'Medium')">
+                            <i class="fa fa-plus" aria-hidden="true"></i>
+                            New Position
+                        </a>
+                    </div>
+                </div>
+                <div class="row mb-3 mt-3">
+                    <div class="datatable-wrapper datatable-loading no-footer sortable searchable fixed-columns">
+                        <div class="datatable-top">
+                            <div class="datatable-dropdown">
+                                <label>
+                                    <select class="form-select">
+                                        <option value="5">5</option>
+                                        <option value="10">10</option>
+                                        <option value="15">15</option>
+                                        <option value="20">20</option>
+                                    </select>
+                                </label>
+                            </div>
+                            <div class="datatable-search">
+                                <input id="txtSearchPos" class="form-control" placeholder="Search..." type="search" title="Search within table">
+                            </div>
+                        </div>
+                        <div class="datatable-container" id="DataTablePosition">
+                            @await Component.InvokeAsync(typeof(DataTablePositionViewComponent), new { ViewBag.searchKey, ViewBag.page, ViewBag.pageSize })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section CustomScripts {
+    @{
+        await Html.RenderPartialAsync("_PartialValidationScripts");
+    }
+}
+
+
+
+
+

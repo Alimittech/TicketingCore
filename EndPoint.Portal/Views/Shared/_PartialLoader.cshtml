@@ -1,0 +1,27 @@
+﻿<script>
+    $(function () {
+        function topbarResetToDefaults() {
+            topbar.config({
+                autoRun: true,
+                barThickness: 4,
+                barColors: {
+                    '0': 'rgba(0,198,0,.8)',
+                    '.50': 'rgba(0,78,0,.81)',
+                    '.75': 'rgba(0,97,0,.46)',
+                    '1.0': 'rgba(78,181,78,.5)'
+                },
+                shadowBlur: 10,
+                shadowColor: 'rgba(0,   0,   0,   .6)',
+                className: 'topbar'
+            })
+        }
+
+        // Page load
+        topbarResetToDefaults()
+        topbar.show()
+        setTimeout(function () {
+            $('#PageAuth').fadeIn('slow')
+            topbar.hide()
+        }, 1500)
+    })
+</script>

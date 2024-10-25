@@ -1,0 +1,68 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Aliasys Portal</title>
+    <link asp-append-version="true" href="~/img/logo/favicon.ico" rel="shortcut icon">
+    <link asp-append-version="true" href="~/img/logo/apple-touch-icon.png" rel="apple-touch-icon">
+
+    <!-- ################################### Styles ################################### -->
+    @{
+        if (IsSectionDefined("Styles"))
+        {
+            @await RenderSectionAsync("Styles", false)
+        }
+        else
+        {
+            #region Styles
+            <link asp-append-version="true" href="~/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+            <link asp-append-version="true" href="~/lib/dashboard/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+            <link asp-append-version="true" href="~/lib/sweetalert2/sweetalert2.min.css" rel="stylesheet" />
+            <link asp-append-version="true" href="~/css/style.auth.css" rel="stylesheet" />
+            @await RenderSectionAsync("CustomStyles", false)
+            #endregion
+        }
+    }
+</head>
+
+<body>
+    <!-- ################################### Main ################################### -->
+    <main>
+        @if (IsSectionDefined("Main"))
+        {
+            @await RenderSectionAsync("Main", false)
+        }
+        else
+        {
+            @RenderBody()
+        }
+    </main>
+
+    <!-- ################################### Scripts ################################### -->
+    @{
+        if (IsSectionDefined("Scripts"))
+        {
+            @await RenderSectionAsync("Scripts", false)
+        }
+        else
+        {
+            #region Scripts
+            <script asp-append-version="true" src="~/lib/jquery/jquery.min.js"></script>
+            <script asp-append-version="true" src="~/lib/bootstrap/js/bootstrap.min.js"></script>
+            <script asp-append-version="true" src="~/lib/sweetalert2/sweetalert2.all.min.js"></script>
+            <script asp-append-version="true" src="~/js/script.js"></script>
+            <script asp-append-version="true" src="~/lib/dashboard/js/main.js"></script>
+            @await RenderSectionAsync("CustomScripts", false)
+            @await Html.PartialAsync("~/Views/Shared/_PartialValidationScripts.cshtml")
+            #endregion
+        }
+    }
+
+    <!-- ################################### Loader ################################### -->
+    <partial name="_PartialLoader" />
+    <partial name="~/Views/Shared/_PartialModalLoader.cshtml" />
+</body>
+</html>
+

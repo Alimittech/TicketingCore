@@ -1,0 +1,65 @@
+﻿@addTagHelper *, LazZiya.TagHelpers
+@using Aliasys.Application.Services.InternalServices.SystemServices.Queries.GetSystem.GetSystemFullList;
+@model ResultGetSystemFullListDto
+
+<div id="listSystem" class="returnParent">
+    <table class="table datatable datatable-table table-hover table-responsive-md">
+        <thead>
+            <tr class="table-success">
+                <th data-sortable="true" style="width:5%;">
+                    <a href="#" class="datatable-sorter">#</a>
+                </th>
+                <th data-sortable="true" aria-sort="ascending" class="datatable-ascending" style="width:25%;">
+                    <a href="#" class="datatable-sorter">Name</a>
+                </th>
+                <th data-sortable="true" style="width:25%;">
+                    <a href="#" class="datatable-sorter">Parent</a>
+                </th>
+                <th data-sortable="true" style="width:35%;">
+                    <a href="#" class="datatable-sorter">Description</a>
+                </th>
+                <th style="width:10%;">
+                    <a href="#">Operations</a>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.RowsCount != 0)
+            {
+                @foreach (var item in Model.sysList)
+                {
+                    <tr role="row" class="odd table-light" data-index="@(Model.sysList.IndexOf(item))">
+                        <td>@(Model.sysList.IndexOf(item) + 1)</td>
+                        <td>@item.Name</td>
+                        <td>@item.ParentSystem</td>
+                        <td>@item.Description</td>
+                        <td>
+                            <a class="text-warning mouse-pointer p-0" onclick="showInPopup('@Url.RouteUrl("updateSystem",new { id = item.Id},Context.Request.Scheme)','Update System', 'Update' , 'Medium')">
+                                <i class="fa fa-pencil-alt font-medium-3 mr-2"></i>
+                            </a>
+                            &nbsp;
+                            <a class="text-danger mouse-pointer p-0" onclick="showInPopup('@Url.RouteUrl("deleteSystem",new { id = item.Id},Context.Request.Scheme)','Delete System', 'Delete' , 'Medium')">
+                                <i class="fa fa-trash font-medium-3 mr-2"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            }
+
+        </tbody>
+    </table>
+    <div class="row">
+        <div class="col text-center">
+            <paging total-records="@Model.RowsCount"
+                    page-no="@Model.Page"
+                    page-size="@Model.PageSize"
+                    show-prev-next="true"
+                    show-total-pages="false"
+                    show-total-records="false"
+                    show-page-size-nav="false"
+                    query-string-key-page-no="Page"
+                    query-string-key-page-size="PageSize">
+            </paging>
+        </div>
+    </div>
+</div>

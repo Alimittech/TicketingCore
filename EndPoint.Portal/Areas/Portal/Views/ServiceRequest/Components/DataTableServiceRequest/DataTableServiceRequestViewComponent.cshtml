@@ -1,0 +1,84 @@
+﻿@addTagHelper *, LazZiya.TagHelpers
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using Aliasys.Application.Services.InternalServices.ServiceServices.ServiceRequestServices.Queries.GetServiceRequest;
+@model ResultGetAllServiceReqDto
+
+@{
+    var num = ((Model.Page) - 1) * (Model.PageSize);
+}
+
+<div id="listServiceRequest" class="returnParent">
+    <table class="table datatable datatable-table table-hover table-responsive-md">
+        <thead>
+            <tr class="table-success">
+                <th data-sortable="true" style="width:5%;">
+                    <a href="#" class="datatable-sorter">#</a>
+                </th>
+                <th data-sortable="true" aria-sort="ascending" class="datatable-ascending" style="width:15%;">
+                    <a href="#" class="datatable-sorter">Request Id</a>
+                </th>
+                <th data-sortable="true" aria-sort="ascending" class="datatable-ascending" style="width:8%;">
+                    <a href="#" class="datatable-sorter">Category</a>
+                </th>
+                <th data-sortable="true" aria-sort="ascending" class="datatable-ascending" style="width:10%;">
+                    <a href="#" class="datatable-sorter">Request Type</a>
+                </th>
+                <th data-sortable="true" aria-sort="ascending" class="datatable-ascending" style="width:14%;">
+                    <a href="#" class="datatable-sorter">Create Time</a>
+                </th>
+                <th data-sortable="true" aria-sort="ascending" class="datatable-ascending" style="width:12%;">
+                    <a href="#" class="datatable-sorter">Originator</a>
+                </th>
+                <th data-sortable="true" aria-sort="ascending" class="datatable-ascending" style="width:12%;">
+                    <a href="#" class="datatable-sorter">State</a>
+                </th>
+                <th data-sortable="true" aria-sort="ascending" class="datatable-ascending" style="width:12%;">
+                    <a href="#" class="datatable-sorter">Current Phase</a>
+                </th>
+                <th data-sortable="true" aria-sort="ascending" class="datatable-ascending" style="width:12%;">
+                    <a href="#" class="datatable-sorter">Processor</a>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.RowsCount != 0 || Model.srvRequestList != null)
+            {
+                @foreach (var item in Model.srvRequestList)
+                {
+                    <tr role="row" class="odd table-light" data-index="@(Model.srvRequestList.IndexOf(item))">
+                        <td>@(num + (Model.srvRequestList.IndexOf(item) + 1))</td>
+                        <td><a class="mouse-pointer p-0" onclick="showInPopup('@Url.RouteUrl("changeServiceRequest",new { id = item.Id},Context.Request.Scheme)','Change Service Request', 'Other' , 'Large')">@item.RequestNumber</a></td>
+                        <td>@item.ServiceCategory</td>
+                        <td>@item.ServiceRequestType</td>
+                        <td>@item.RegisterDateTime</td>
+                        <td>@item.OwnerName</td>
+                        <td>@item.StateName</td>
+                        <td>
+                            @{
+                                if (item.StateName != "Closed" && item.StateName != "Cancelled")
+                                {
+                                    @item.PhaseName
+                                }
+                            }
+                        </td>
+                        <td>@item.ProcessorName</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+    <div class="row">
+        <div class="col text-center">
+            <paging total-records="@Model.RowsCount"
+                    page-no="@Model.Page"
+                    page-size="@Model.PageSize"
+                    show-prev-next="true"
+                    show-total-pages="false"
+                    show-total-records="false"
+                    show-page-size-nav="false"
+                    query-string-key-page-no="Page"
+                    query-string-key-page-size="PageSize">
+            </paging>
+        </div>
+    </div>
+</div>

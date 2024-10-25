@@ -1,0 +1,21 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using Aliasys.Application.Services.InternalServices.PositionServices.Commands.UpdatePosition
+@model RequestUpdatePositionDto
+
+<form asp-route="updatePosition" autocomplete="off" onsubmit="return jQueryAjaxPost(this);">
+    <div class="row mb-3 mt-4">
+        <div class="col-12">
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group mb-3">
+                <label asp-for="Name" class="col-form-label required-field"></label>
+                <input asp-for="Name" class="form-control" placeholder="Enter name" maxlength="50" tabindex="1" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button type="submit" class="mr-1 shadow-z-2 btn btn-warning" onclick="$.validator.unobtrusive.parse($('form'));" tabindex="2">Update</button>
+        <button type="button" class="mr-1 shadow-z-2 btn btn-secondary" data-bs-dismiss="modal" tabindex="3">Cancel</button>
+    </div>
+</form>

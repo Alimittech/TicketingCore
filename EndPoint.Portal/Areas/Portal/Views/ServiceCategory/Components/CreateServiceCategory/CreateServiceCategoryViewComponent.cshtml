@@ -1,0 +1,28 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using Aliasys.Application.Services.InternalServices.ServiceServices.ServiceCategoryServices.Commands.CreateServiceCategory;
+@model RequestCreateServiceCategoryDto
+
+<form asp-route="createServiceCategory" autocomplete="off" onsubmit="return jQueryAjaxPost(this);">
+    <div class="row mb-3 mt-4">
+        <div class="col-12">
+            <div class="form-group mb-3">
+                <label asp-for="Name" class="col-form-label required-field"></label>
+                <input asp-for="Name" class="form-control" placeholder="Enter name" maxlength="50" autofocus tabindex="1" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="UserGroupId_FK" class="col-form-label required-field"></label>
+                <select class="form-select" asp-for="UserGroupId_FK" asp-items="@ViewBag.GroupList" tabindex="2">
+                    <option value="0" disabled selected="selected">-- Select Group --</option>
+                </select>
+                <span asp-validation-for="UserGroupId_FK" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button type="submit" class="mr-1 shadow-z-2 btn btn-success" onclick="$.validator.unobtrusive.parse($('form'));" tabindex="3">Create</button>
+        <button type="button" class="mr-1 shadow-z-2 btn btn-secondary" data-bs-dismiss="modal" tabindex="4">Cancel</button>
+    </div>
+</form>
+

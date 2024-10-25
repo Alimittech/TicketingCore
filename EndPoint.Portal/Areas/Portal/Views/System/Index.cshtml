@@ -1,0 +1,144 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using Aliasys.Common.Dtos
+@using EndPoint.Portal.Areas.Portal.ViewComponents.Roll;
+@using EndPoint.Portal.Areas.Portal.ViewComponents.System;
+@using EndPoint.Portal.Areas.Portal.ViewComponents.User;
+
+@{
+    ViewData["Title"] = "System Management";
+    Layout = "~/Areas/Portal/Views/Shared/_LayoutPortal.cshtml";
+}
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title fw-bold">System Management</h5>
+        <ul class="nav nav-tabs nav-tabs-bordered d-flex" id="borderedTabJustified" role="tablist">
+            <li class="nav-item flex-fill" role="presentation">
+                <button class="nav-link w-100 active" id="system-tab" data-bs-toggle="tab" data-bs-target="#system" type="button" role="tab" aria-controls="system" aria-selected="true" tabindex="-1">System</button>
+            </li>
+            <li class="nav-item flex-fill" role="presentation">
+                <button class="nav-link w-100" id="roll-tab" data-bs-toggle="tab" data-bs-target="#roll" type="button" role="tab" aria-controls="roll" aria-selected="false" tabindex="-1">Roll Management</button>
+            </li>
+            <li class="nav-item flex-fill" role="presentation">
+                <button class="nav-link w-100" id="user-tab" data-bs-toggle="tab" data-bs-target="#user" type="button" role="tab" aria-controls="user" aria-selected="false">User Account</button>
+            </li>
+        </ul>
+
+        <div class="tab-content pt-2" id="borderedTabJustifiedContent">
+            <!-- System-Tab -->
+            <div class="tab-pane fade active show" id="system" role="tabpanel" aria-labelledby="system-tab">
+                <div class="row mb-1 mt-4">
+                    <div class="col-lg-3 col-md-3 col-sm-6">
+                        <a id="sysNewSystem" class="btn btn-success" onclick="showInPopup('@Url.RouteUrl("createSystem", null,Context.Request.Scheme)','New System', 'Create', 'Medium')">
+                            <i class="fa fa-plus" aria-hidden="true"></i>
+                            New System
+                        </a>
+                    </div>
+                </div>
+                <div class="row mb-3 mt-3">
+                    <div class="datatable-wrapper datatable-loading no-footer sortable searchable fixed-columns">
+                        <div class="datatable-top">
+                            <div class="datatable-dropdown">
+                                <label>
+                                    <select class="form-select">
+                                        <option value="5">5</option>
+                                        <option value="10">10</option>
+                                        <option value="15">15</option>
+                                        <option value="20">20</option>
+                                    </select>
+                                </label>
+                            </div>
+                            <div class="datatable-search">
+                                <input class="form-control" placeholder="Search..." type="search" title="Search within table">
+                            </div>
+                        </div>
+                        <div class="datatable-container" id="DataTableSystem">
+                            @await Component.InvokeAsync(typeof(DataTableSystemViewComponent), new { ViewBag.searchKey, ViewBag.page, ViewBag.pageSize })
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Roll-Tab -->
+            <div class="tab-pane fade" id="roll" role="tabpanel" aria-labelledby="roll-tab">
+                <div class="row mb-1 mt-4">
+                    <div class="col-lg-3 col-md-3 col-sm-6">
+                        <a id="rolNewRoll" class="btn btn-success" onclick="showInPopup('@Url.RouteUrl("createRoll", null,Context.Request.Scheme)','New Roll', 'Create', 'Medium')">
+                            <i class="fa fa-plus" aria-hidden="true"></i>
+                            New Roll
+                        </a>
+                    </div>
+                </div>
+                <div class="row mb-3 mt-3">
+                    <div class="datatable-wrapper datatable-loading no-footer sortable searchable fixed-columns">
+                        <div class="datatable-top">
+                            <div class="datatable-dropdown">
+                                <label>
+                                    <select class="form-select">
+                                        <option value="5">5</option>
+                                        <option value="10">10</option>
+                                        <option value="15">15</option>
+                                        <option value="20">20</option>
+                                    </select>
+                                </label>
+                            </div>
+                            <div class="datatable-search">
+                                <input class="form-control" placeholder="Search..." type="search" title="Search within table">
+                            </div>
+                        </div>
+                        <div class="datatable-container" id="DataTableRoll">
+                            @await Component.InvokeAsync(typeof(DataTableUserRollViewComponent), new { ViewBag.searchKey, ViewBag.page, ViewBag.pageSize })
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- User-Tab -->
+            <div class="tab-pane fade" id="user" role="tabpanel" aria-labelledby="user-tab">
+                <div class="row mb-1 mt-4">
+                    <div class="col-lg-3 col-md-3 col-sm-6">
+                        <a id="usrNewUser" class="btn btn-success" onclick="showInPopup('@Url.RouteUrl("createUser", null,Context.Request.Scheme)','New User', 'Create', 'Medium')">
+                            <i class="fa fa-plus" aria-hidden="true"></i>
+                            New User
+                        </a>
+                    </div>
+                </div>
+                <div class="row mb-3 mt-3">
+                    <div class="datatable-wrapper datatable-loading no-footer sortable searchable fixed-columns">
+                        <div class="datatable-top">
+                            <div class="datatable-dropdown">
+                                <label>
+                                    <select class="form-select">
+                                        <option value="5">5</option>
+                                        <option value="10">10</option>
+                                        <option value="15">15</option>
+                                        <option value="20">20</option>
+                                    </select>
+                                </label>
+                            </div>
+                            <div class="datatable-search">
+                                <input class="form-control" placeholder="Search..." type="search" title="Search within table">
+                            </div>
+                        </div>
+                        <div class="datatable-container" id="DataTableUser">
+                            @await Component.InvokeAsync(typeof(DataTableUserViewComponent), new { ViewBag.searchKey, ViewBag.page, ViewBag.pageSize })
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+@section CustomScripts {
+    @{
+        await Html.RenderPartialAsync("_PartialValidationScripts");
+    }
+}
+
+
+
+
+

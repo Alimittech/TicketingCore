@@ -1,0 +1,126 @@
+﻿@using EndPoint.Portal.Areas.Portal.ViewComponents.ServiceRequest;
+@using EndPoint.Portal.Areas.Portal.ViewComponents.ServiceRequestLifeCycle;
+@using Aliasys.Application.Services.InternalServices.ServiceServices.ServiceRequestServices.Queries.GetServiceRequest.GetAllServiceReqInGroupWithUserId;
+@using EndPoint.Portal.Areas.Portal.Controllers;
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "Get Service Request";
+    Layout = "~/Areas/Portal/Views/Shared/_LayoutPortal.cshtml";
+}
+
+<style>
+    /* The switch - the box around the slider */
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 60px;
+        height: 34px;
+        float: right;
+        margin-left: 10px;
+    }
+
+        /* Hide default HTML checkbox */
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+    /* The slider */
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+    input:checked + .slider {
+        background-color: #2196F3;
+    }
+
+    input:focus + .slider {
+        box-shadow: 0 0 1px #2196F3;
+    }
+
+    input:checked + .slider:before {
+        -webkit-transform: translateX(26px);
+        -ms-transform: translateX(26px);
+        transform: translateX(26px);
+    }
+
+    /* Rounded sliders */
+    .slider.round {
+        border-radius: 34px;
+    }
+
+        .slider.round:before {
+            border-radius: 50%;
+        }
+</style>
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title fw-bold">Pending to me</h5>
+        <div class="pt-2">
+            <div class="row mb-3 mt-3">
+                <div class="datatable-wrapper datatable-loading no-footer sortable searchable fixed-columns">
+                    <div class="datatable-top">
+                        <div class="datatable-dropdown">
+                            <label>
+                                <select class="form-select">
+                                    <option value="5">5</option>
+                                    <option value="10">10</option>
+                                    <option value="15">15</option>
+                                    <option value="20">20</option>
+                                </select>
+                            </label>
+						</div>
+                        
+                        <link rel="stylesheet" href="toggle.css" />
+                        <div class="datatable-newtoggle">
+                            <label class="switch">
+                                <input type="checkbox" name="ShowAllDataToggle" id="allRequestToggle">
+								<span class="slider round"></span>
+                            </label>
+                        </div>
+                        <div class="datatable-search"> 
+                            <input class="form-control" placeholder="Search..." type="search" title="Search within table">
+                        </div>
+                    </div>
+                    <div class="datatable-container" id="DataTableServiceReqLifeCycle">
+                        @await Component.InvokeAsync(typeof(DataTableServiceRequestLifeCycleViewComponent), new { ViewBag.searchKey, ViewBag.page, ViewBag.pageSize })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section CustomScripts {
+    @{
+        await Html.RenderPartialAsync("_PartialValidationScripts");
+    }
+}
+
+
+
+

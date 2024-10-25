@@ -1,0 +1,110 @@
+https://stackoverflow.com/questions/49682644/asp-net-core-2-0-ldap-active-directory-authentication/49742910#49742910
+https://decovar.dev/blog/2022/06/16/dotnet-ldap-authentication/#environment
+https://stackoverflow.com/questions/53707820/how-to-use-active-directory-authentication-in-asp-net-core
+https://github.com/OneBitSoftware/Microsoft.AspNetCore.Authentication.ActiveDirectory/blob/master/README.md
+https://www.codemag.com/article/1312041/Using-Active-Directory-in-.NET
+https://learn.microsoft.com/en-us/answers/questions/1039532/authenticate-users-inside-net-6-0-asp-net-core-mvc
+https://thesoftwayfarecoder.com/ldap-authentication-in-asp-net-core/
+https://stackoverflow.com/questions/75697815/asp-net-core-mvc-windows-authentication-using-login-page
+https://www.c-sharpcorner.com/article/configure-windows-authentication-in-asp-net-core/
+https://learn.microsoft.com/en-us/dotnet/framework/wcf/feature-details/how-to-authenticate-with-a-user-name-and-password
+http://www.codedigest.com/posts/4/forms-authentication-using-active-directory-users-in-aspnet-mvc
+https://beansoftware.com/ASP.NET-Tutorials/Forms-Authentication-Active-Directory.aspx
+https://tech.trailmax.info/2016/03/using-owin-and-active-directory-to-authenticate-users-in-asp-net-mvc-5-application/
+https://blog.e-zest.com/how-to-retrieve-active-directory-information-for-authentication-in-asp-net/
+------------------------------------------------------------------------------------------------------
+https://gijgo.com/tree/demos/bootstrap-treeview-checkbox ---> Tree View With Checkbox
+https://codereview.stackexchange.com/questions/102389/nested-object-to-hierarchical-object-list
+
+Problem Of http error 500.30:
+1- Change Connection String: "Server=192.168.6.247; Database=AliasysPortalDB; User Id=sa; Password=Hamidr@14; TrustServerCertificate=true;"
+2- Change Path in Program Cs Line 56
+
+
+public class Category
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public int ParentId { get; set; }
+        public IList<Category>? ChildCat { get; set; } = new List<Category>();
+    }
+
+    public static class Db
+    {
+        public static IList<Category> GetCat()
+        {
+            return new List<Category>()
+            {
+                new Category{Id = 1, Name = "name1" , ParentId = 1},
+                new Category{Id = 2, Name = "name2" , ParentId = 5},
+                new Category{Id = 3, Name = "name3" , ParentId = 1},
+                new Category{Id = 4, Name = "name4" , ParentId = 1},
+                new Category{Id = 5, Name = "name5" , ParentId = 3},
+                new Category{Id = 6, Name = "name6" , ParentId = 1},
+                new Category{Id = 7, Name = "name7" , ParentId = 4},
+                new Category{Id = 8, Name = "name8" , ParentId = 2},
+                new Category{Id = 9, Name = "name9" , ParentId = 4},
+                new Category{Id = 10, Name = "name10" , ParentId = 5},
+                new Category{Id = 11, Name = "name11" , ParentId = 4},
+                new Category{Id = 12, Name = "name12" , ParentId = 3},
+                new Category{Id = 13, Name = "name13" , ParentId = 6},
+                new Category{Id = 14, Name = "name14" , ParentId = 7},
+                new Category{Id = 15, Name = "name15" , ParentId = 3},
+                new Category{Id = 16, Name = "name16" , ParentId = 4},
+                new Category{Id = 17, Name = "name17" , ParentId = 6}
+            };
+        }
+
+        public class CategoryService
+        {
+            public IList<Category> GetCat()
+            {
+                var data = Db.GetCat();
+                IList<Category> hierarcy = new List<Category>();
+
+                foreach (var group in data.GroupBy(p => p.ParentId).OrderBy(p => p.First().ParentId).ToList())
+                {
+                    foreach (var item in group)
+                    {
+                        var find = hierarcy.FirstOrDefault(p => p.Id == item.ParentId);
+                        if (find == null)
+                        {
+                            var newFind = data.FirstOrDefault(f => f.Id == item.ParentId);
+                            if (newFind != null)
+                            {
+                                hierarcy.Add(new Category
+                                {
+                                    Id = newFind.Id,
+                                    ParentId = newFind.ParentId,
+                                    Name = newFind.Name,
+                                    ChildCat = new List<Category> { new Category { Id = item.Id, ParentId = item.ParentId, Name = item.Name } }
+                                });
+                            }
+                        }
+                        else
+                        {
+                            if (find.Id != )
+                            {
+
+                            }
+                            find.ChildCat.Add(new Category { Id = item.Id, ParentId = item.ParentId, Name = item.Name });
+                        }
+                    }
+                }
+                return hierarcy;
+            }
+        }
+    }
+
+
+
+CategoryService newCat = new CategoryService();
+
+foreach (var item in newCat.GetCat())
+{
+    Console.WriteLine($"Id:{item.Id} - ParentId:{item.ParentId} - Name:{item.Name}");
+    foreach (var item1 in item.ChildCat)
+	{
+        Console.WriteLine($"Id:{item1.Id} - ParentId:{item1.ParentId} - Name:{item1.Name}");
+    }
+}

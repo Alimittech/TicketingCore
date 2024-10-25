@@ -1,0 +1,76 @@
+﻿<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta property="og:image" content="path/to/image.html">
+    <meta name="theme-color" content="#000">
+    <link href="~/img/logo/favicon.ico" rel="shortcut icon" asp-append-version="true" />
+    <title>Aliasys Systems</title>
+    <!-- ################################### Styles ################################### -->
+    @{
+        if (IsSectionDefined("Styles"))
+        {
+            @await RenderSectionAsync("Styles", false)
+        }
+        else
+        {
+            #region Styles
+            <link rel="stylesheet" href="~/lib/error/css/jquery.pagepiling.min.css" asp-append-version="true" />
+            <link rel="stylesheet" href="~/lib/error/css/style.error.css" asp-append-version="true" />
+            @await RenderSectionAsync("CustomStyles", false)
+            #endregion
+        }
+    }
+</head>
+
+<body class="software-lp">
+    <style>
+        .left {
+            display: none !important;
+        }
+    </style>
+
+    <!-- ################################### Main ################################### -->
+    <main>
+        @if (IsSectionDefined("Main"))
+        {
+            @await RenderSectionAsync("Main", false)
+        }
+        else
+        {
+            @RenderBody()
+        }
+    </main>
+
+    <!-- ################################### Scripts ################################### -->
+    @{
+        if (IsSectionDefined("Scripts"))
+        {
+            @await RenderSectionAsync("Scripts", false)
+        }
+        else
+        {
+            #region Scripts
+            <script src="~/lib/error/js/pace.min.js" asp-append-version="true"></script>
+            <script src="~/lib/jquery/jquery.min.js" asp-append-version="true"></script>
+            <script src="~/lib/error/js/jquery.pagepiling-ltr.js" asp-append-version="true"></script>
+            <script src="~/lib/error/js/waypoints.min.js" asp-append-version="true"></script>
+            <script src="~/lib/error/js/match-height.js" asp-append-version="true"></script>
+            <script src="~/lib/error/js/jquery.magnific-popup.min.js" asp-append-version="true"></script>
+            <script src="~/lib/error/js/imagesloaded.pkgd.min.js" asp-append-version="true"></script>
+            <script src="~/lib/error/js/isotope.pkgd.min.js" asp-append-version="true"></script>
+            <script src="~/lib/error/js/animate-css.js" asp-append-version="true"></script>
+            <script src="~/lib/error/js/tilt.js" asp-append-version="true"></script>
+            <script src="~/lib/error/js/slick.min.js" asp-append-version="true"></script>
+            <script src="~/lib/error/js/particles.min.js" asp-append-version="true"></script>
+            <script src="~/lib/error/js/readmore.min.js" asp-append-version="true"></script>
+            <script src="~/lib/error/js/fluidWave.js" asp-append-version="true"></script>
+            <script src="~/lib/error/js/script.error.js" asp-append-version="true"></script>
+            @await RenderSectionAsync("CustomScripts", false)
+            #endregion
+        }
+    }
+</body>
+</html>

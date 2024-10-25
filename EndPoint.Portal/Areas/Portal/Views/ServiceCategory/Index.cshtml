@@ -1,0 +1,180 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using Aliasys.Common.Dtos
+@using EndPoint.Portal.Areas.Portal.ViewComponents.ServiceCategory;
+@using EndPoint.Portal.Areas.Portal.ViewComponents.ServicePhase;
+@using EndPoint.Portal.Areas.Portal.ViewComponents.ServiceRequestType;
+@using EndPoint.Portal.Areas.Portal.ViewComponents.ServiceState;
+@{
+    ViewData["Title"] = "Service Management";
+    Layout = "~/Areas/Portal/Views/Shared/_LayoutPortal.cshtml";
+}
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title fw-bold">Service Management</h5>
+        <ul class="nav nav-tabs nav-tabs-bordered d-flex" id="borderedTabJustified" role="tablist">
+            <li class="nav-item flex-fill" role="presentation">
+                <button class="nav-link w-100 active" id="serviceCategory-tab" data-bs-toggle="tab" data-bs-target="#serviceCategory" type="button" role="tab" aria-controls="serviceCategory" aria-selected="true" tabindex="-1">Category</button>
+            </li>
+            <li class="nav-item flex-fill" role="presentation">
+                <button class="nav-link w-100" id="serviceRequestType-tab" data-bs-toggle="tab" data-bs-target="#serviceRequestType" type="button" role="tab" aria-controls="serviceRequestType" aria-selected="false" tabindex="-1">Request Type</button>
+            </li>
+            <li class="nav-item flex-fill" role="presentation">
+                <button class="nav-link w-100" id="serviceState-tab" data-bs-toggle="tab" data-bs-target="#serviceState" type="button" role="tab" aria-controls="serviceState" aria-selected="false" tabindex="-1">State</button>
+            </li>
+            <li class="nav-item flex-fill" role="presentation">
+                <button class="nav-link w-100" id="servicePhase-tab" data-bs-toggle="tab" data-bs-target="#servicePhase" type="button" role="tab" aria-controls="servicePhase" aria-selected="false" tabindex="-1">Phase</button>
+            </li>
+        </ul>
+
+        <div class="tab-content pt-2" id="borderedTabJustifiedContent">
+            <!-- ServiceCategory-Tab -->
+            <div class="tab-pane fade active show" id="serviceCategory" role="tabpanel" aria-labelledby="serviceCategory-tab">
+                <div class="row mb-1 mt-4">
+                    <div class="col-lg-3 col-md-3 col-sm-6">
+                        <a id="srvNewServiceCategory" class="btn btn-success" onclick="showInPopup('@Url.RouteUrl("createServiceCategory", null,Context.Request.Scheme)','New Service Category', 'Create', 'Medium')">
+                            <i class="fa fa-plus" aria-hidden="true"></i>
+                            New Service Category
+                        </a>
+                    </div>
+                </div>
+                <div class="row mb-3 mt-3">
+                    <div class="datatable-wrapper datatable-loading no-footer sortable searchable fixed-columns">
+                        <div class="datatable-top">
+                            <div class="datatable-dropdown">
+                                <label>
+                                    <select class="form-select">
+                                        <option value="5">5</option>
+                                        <option value="10">10</option>
+                                        <option value="15">15</option>
+                                        <option value="20">20</option>
+                                    </select>
+                                </label>
+                            </div>
+                            <div class="datatable-search">
+                                <input class="form-control" placeholder="Search..." type="search" title="Search within table">
+                            </div>
+                        </div>
+                        <div class="datatable-container" id="DataTableServiceCategory">
+                            @await Component.InvokeAsync(typeof(DataTableServiceCategoryViewComponent), new { ViewBag.searchKey, ViewBag.page, ViewBag.pageSize })
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ServiceRequestType-Tab -->
+            <div class="tab-pane fade" id="serviceRequestType" role="tabpanel" aria-labelledby="serviceRequestType-tab">
+                <div class="row mb-1 mt-4">
+                    <div class="col-lg-3 col-md-3 col-sm-6">
+                        <a id="srvNewServiceRequestType" class="btn btn-success" onclick="showInPopup('@Url.RouteUrl("createServiceRequestType", null,Context.Request.Scheme)','New Service Request Type', 'Create', 'Medium')">
+                            <i class="fa fa-plus" aria-hidden="true"></i>
+                            New Service Request Type
+                        </a>
+                    </div>
+                </div>
+                <div class="row mb-3 mt-3">
+                    <div class="datatable-wrapper datatable-loading no-footer sortable searchable fixed-columns">
+                        <div class="datatable-top">
+                            <div class="datatable-dropdown">
+                                <label>
+                                    <select class="form-select">
+                                        <option value="5">5</option>
+                                        <option value="10">10</option>
+                                        <option value="15">15</option>
+                                        <option value="20">20</option>
+                                    </select>
+                                </label>
+                            </div>
+                            <div class="datatable-search">
+                                <input class="form-control" placeholder="Search..." type="search" title="Search within table">
+                            </div>
+                        </div>
+                        <div class="datatable-container" id="DataTableServiceRequestType">
+                            @await Component.InvokeAsync(typeof(DataTableServiceRequestTypeViewComponent), new { ViewBag.searchKey, ViewBag.page, ViewBag.pageSize })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- ServiceState-Tab -->
+            <div class="tab-pane fade" id="serviceState" role="tabpanel" aria-labelledby="serviceState-tab">
+                <div class="row mb-1 mt-4">
+                    <div class="col-lg-3 col-md-3 col-sm-6">
+                        <a id="srvNewServiceState" class="btn btn-success" onclick="showInPopup('@Url.RouteUrl("createServiceState", null,Context.Request.Scheme)','New Service State', 'Create', 'Medium')">
+                            <i class="fa fa-plus" aria-hidden="true"></i>
+                            New Service State
+                        </a>
+                    </div>
+                </div>
+                <div class="row mb-3 mt-3">
+                    <div class="datatable-wrapper datatable-loading no-footer sortable searchable fixed-columns">
+                        <div class="datatable-top">
+                            <div class="datatable-dropdown">
+                                <label>
+                                    <select class="form-select">
+                                        <option value="5">5</option>
+                                        <option value="10">10</option>
+                                        <option value="15">15</option>
+                                        <option value="20">20</option>
+                                    </select>
+                                </label>
+                            </div>
+                            <div class="datatable-search">
+                                <input class="form-control" placeholder="Search..." type="search" title="Search within table">
+                            </div>
+                        </div>
+                        <div class="datatable-container" id="DataTableServiceState">
+                            @await Component.InvokeAsync(typeof(DataTableServiceStateViewComponent), new { ViewBag.searchKey, ViewBag.page, ViewBag.pageSize })
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ServicePhase-Tab -->
+            <div class="tab-pane fade" id="servicePhase" role="tabpanel" aria-labelledby="servicePhase-tab">
+                <div class="row mb-1 mt-4">
+                    <div class="col-lg-3 col-md-3 col-sm-6">
+                        <a id="srvNewServicePhase" class="btn btn-success" onclick="showInPopup('@Url.RouteUrl("createServicePhase", null,Context.Request.Scheme)','New Service Category', 'Create', 'Medium')">
+                            <i class="fa fa-plus" aria-hidden="true"></i>
+                            New Service Phase
+                        </a>
+                    </div>
+                </div>
+                <div class="row mb-3 mt-3">
+                    <div class="datatable-wrapper datatable-loading no-footer sortable searchable fixed-columns">
+                        <div class="datatable-top">
+                            <div class="datatable-dropdown">
+                                <label>
+                                    <select class="form-select">
+                                        <option value="5">5</option>
+                                        <option value="10">10</option>
+                                        <option value="15">15</option>
+                                        <option value="20">20</option>
+                                    </select>
+                                </label>
+                            </div>
+                            <div class="datatable-search">
+                                <input class="form-control" placeholder="Search..." type="search" title="Search within table">
+                            </div>
+                        </div>
+                        <div class="datatable-container" id="DataTableServicePhase">
+                            @await Component.InvokeAsync(typeof(DataTableServicePhaseViewComponent), new { ViewBag.searchKey, ViewBag.page, ViewBag.pageSize })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section CustomScripts {
+    @{
+        await Html.RenderPartialAsync("_PartialValidationScripts");
+    }
+}
+
+
+
+
+

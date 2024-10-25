@@ -1,0 +1,64 @@
+.alia-crimson-color {
+    background: #9e005d !important;
+}
+.alia-blue-color {
+    background: #00b6be !important;
+}
+.alia-gray-color {
+    background: #9d9fa2 !important;
+}
+.bg-success {
+    background: #11998e !important;
+    background: -webkit-linear-gradient(to right, #38ef7d, #11998e) !important;
+    background: linear-gradient(to right, #38ef7d, #11998e) !important;
+}
+
+.bg-warning {
+    background: #FDC830 !important;
+    background: -webkit-linear-gradient(to right, #F37335, #FDC830) !important;
+    background: linear-gradient(to right, #F37335, #FDC830) !important;
+}
+
+.bg-danger {
+    background: #FF416C !important;
+    background: -webkit-linear-gradient(to right, #FF4B2B, #FF416C) !important;
+    background: linear-gradient(to right, #FF4B2B, #FF416C) !important;
+}
+
+.bg-info {
+    background: #36D1DC;
+    background: -webkit-linear-gradient(to left, #5B86E5, #36D1DC);
+    background: linear-gradient(to left, #5B86E5, #36D1DC);
+}
+
+.bg-darkgray {
+    background: #8e9eab;
+    background: -webkit-linear-gradient(to left, #EAEAEA, #DBDBDB, #F2F2F2, #8e9eab);
+    background: linear-gradient(to left, #EAEAEA, #DBDBDB, #F2F2F2, #8e9eab);
+}
+
+.bg-midgray {
+    background: #c6c9ce;
+    background: -webkit-linear-gradient(to left, #d2d5d5, #c6c9ce);
+    background: linear-gradient(to left, #d2d5d5, #c6c9ce);
+}
+
+.required-field:after {
+    content: " * ";
+    color: red;
+}
+.mouse-pointer {
+    cursor: pointer;
+}
+
+.font-bold {
+    font-weight: bold !important;
+    color: black !important;
+}
+
+a.downloadfile img {
+    width: 25px;
+    height: 25px;
+    /*fill: #ff0000 !important;*/
+    filter: invert(14%) sepia(97%) saturate(6927%) hue-rotate(4deg) brightness(102%) contrast(115%);
+}

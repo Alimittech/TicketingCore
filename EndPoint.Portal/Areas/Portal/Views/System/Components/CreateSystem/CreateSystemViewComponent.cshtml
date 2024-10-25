@@ -1,0 +1,38 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using Aliasys.Application.Services.InternalServices.SystemServices.Commands.CreateSystem;
+@model RequestCreateSystemDto
+
+<form asp-route="createSystem" autocomplete="off" onsubmit="return jQueryAjaxPost(this);">
+    <div class="row mb-3 mt-4">
+        <div class="col-12">
+            @{
+                if (Convert.ToBoolean(TempData["SystemListCheck"]))
+                {
+                    <div class="form-group mb-3">
+                        <label asp-for="ParentSystem" class="col-form-label required-field">Parent System</label>
+                        <select class="form-select" asp-for="ParentSystem" asp-items="@ViewBag.SystemList" tabindex="1">
+                            <option value="0" disabled selected="selected">-- Select Parent System --</option>
+                        </select>
+                        <span asp-validation-for="ParentSystem" class="text-danger"></span>
+                    </div>
+                }
+            }
+            <div class="form-group mb-3">
+                <label asp-for="Name" class="col-form-label required-field"></label>
+                <input asp-for="Name" class="form-control" placeholder="Enter name" maxlength="30" autofocus tabindex="2" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="Description" class="col-form-label required-field"></label>
+                <input asp-for="Description" class="form-control" placeholder="Enter Description" maxlength="30" tabindex="3" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button type="submit" class="mr-1 shadow-z-2 btn btn-success" onclick="$.validator.unobtrusive.parse($('form'));" tabindex="6">Create</button>
+        <button type="button" class="mr-1 shadow-z-2 btn btn-secondary" data-bs-dismiss="modal" tabindex="7">Cancel</button>
+    </div>
+</form>
+

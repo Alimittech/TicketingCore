@@ -1,0 +1,102 @@
+﻿@addTagHelper *, LazZiya.TagHelpers
+@using Aliasys.Application.Services.InternalServices.UserServices.Queries.GetUser.GetLocalUserFullList;
+@model ResultGetUserFullListDto
+
+@{
+    var num = ((Model.Page) - 1) * (Model.PageSize);
+}
+
+<div id="listUser" class="returnParent">
+    <table class="table datatable datatable-table table-hover table-responsive-md">
+        <thead>
+            <tr class="table-success">
+                <th data-sortable="true" style="width:5%;">
+                    <a href="#" class="datatable-sorter">#</a>
+                </th>
+                <th data-sortable="true" aria-sort="ascending" class="datatable-ascending" style="width:20%;">
+                    <a href="#" class="datatable-sorter">UserName</a>
+                </th>
+                <th data-sortable="true" aria-sort="ascending" class="datatable-ascending" style="width:20%;">
+                    <a href="#" class="datatable-sorter">DisplayName</a>
+                </th>
+                <th data-sortable="true" aria-sort="ascending" class="datatable-ascending" style="width:20%;">
+                    <a href="#" class="datatable-sorter">Email</a>
+                </th>
+                <th data-sortable="true" style="width:10%;">
+                    <a href="#" class="datatable-sorter">Phone No</a>
+                </th>
+                <th data-sortable="true" style="width:7%;">
+                    <a href="#" class="datatable-sorter">Ext No</a>
+                </th>
+                <th data-sortable="true" style="width:8%;">
+                    <a href="#" class="datatable-sorter">IsActive</a>
+                </th>
+                <th style="width:10%;">
+                    <a href="#">Operations</a>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.RowsCount != 0)
+            {
+                @foreach (var item in Model.userList)
+                {
+                    <tr role="row" class="odd table-light" data-index="@(Model.userList.IndexOf(item))">
+                        <td>@(num + (Model.userList.IndexOf(item) + 1))</td>
+                        <td>@item.UserName</td>
+                        <td>@item.DisplayName</td>
+                        <td>@item.Email</td>
+                        <td>@item.PhoneNumber</td>
+                        <td>@item.ExtentionNumber</td>
+                        <td>
+                            <div class="form-check form-switch">
+                                @if(item.IsActive){
+                                    <input class="form-check-input" type="checkbox" data-toggle="tooltip" data-placement="bottom" title="Change State User" checked onclick="FuncChangeState(@item.Id);">
+                                }
+                                else
+                                {
+                                    <input class="form-check-input" type="checkbox" data-toggle="tooltip" data-placement="bottom" title="Change State User" onclick="FuncChangeState(@item.Id);">
+                                }
+                            </div>
+                        </td>
+                        <td>
+                            <a class="text-warning mouse-pointer p-0" data-toggle="tooltip" data-placement="bottom" title="Edit User" onclick="showInPopup('@Url.RouteUrl("updateUser",new { id = item.Id},Context.Request.Scheme)','Update User', 'Update' , 'Medium')">
+                                <i class="fa fa-pencil-alt fa-lg mr-2"></i>
+                            </a>
+                            &nbsp;
+                            <a class="text-danger mouse-pointer p-0" data-toggle="tooltip" data-placement="bottom" title="Delete User" onclick="showInPopup('@Url.RouteUrl("deleteUser",new { id = item.Id},Context.Request.Scheme)','Delete User', 'Delete' , 'Medium')">
+                                <i class="fa fa-trash fa-lg mr-2"></i>
+                            </a>
+                            &nbsp;
+                            <a class="text-success mouse-pointer p-0" data-toggle="tooltip" data-placement="bottom" title="User In Role" onclick="showInPopup('@Url.RouteUrl("userrole", new { id = item.Id }, Context.Request.Scheme)','User In Role', 'Role' , 'Medium')">
+                                <i class="fa fa-user-circle fa-lg mr-2"></i>
+                            </a>
+                            &nbsp;
+                            <a class="text-primary mouse-pointer p-0" data-toggle="tooltip" data-placement="bottom" title="User In Group" onclick="showInPopup('@Url.RouteUrl("usergroup",new { id = item.Id},Context.Request.Scheme)','User In Group', 'Group' , 'Medium')">
+                                <i class="fa fa-users fa-lg mr-2"></i>
+                            </a>
+                            &nbsp;
+                            <a class="text-secondary mouse-pointer p-0" data-toggle="tooltip" data-placement="bottom" title="User In Department" onclick="showInPopup('@Url.RouteUrl("userdepartment",new { id = item.Id},Context.Request.Scheme)','User In Department', 'Department' , 'Medium')">
+                                <i class="fa fa-home fa-lg mr-2"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+    <div class="row">
+        <div class="col text-center">
+            <paging total-records="@Model.RowsCount"
+                    page-no="@Model.Page"
+                    page-size="@Model.PageSize"
+                    show-prev-next="true"
+                    show-total-pages="false"
+                    show-total-records="false"
+                    show-page-size-nav="false"
+                    query-string-key-page-no="Page"
+                    query-string-key-page-size="PageSize">
+            </paging>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,41 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using EndPoint.Portal.Areas.Portal.Models.ViewModels.OperationUnitViewModel;
+@model OperationUnitDependencyViewModel
+
+<form asp-route="dependencyOperationUnit" autocomplete="off" onsubmit="return jQueryAjaxPost(this);">
+    <div class="row mb-3 mt-4">
+        <div class="col-12">
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="OperationUnitId" />
+            <div class="form-group mb-3">
+                <label class="col-form-label">Operation Unit : <span style="color: gray !important;">@ViewBag.OpunitName</span> </label>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="OrganizationId" class="col-form-label required-field"></label>
+                <select asp-for="OrganizationId" class="form-select" asp-items="@ViewBag.OrgList" tabindex="1">
+                    <option value="0" disabled selected="selected">-- Select Organization --</option>
+                </select>
+                <span asp-validation-for="OrganizationId" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="ParentOperationUnitId" class="col-form-label required-field"></label>
+                <select asp-for="ParentOperationUnitId" class="form-select" asp-items="@ViewBag.ParentOpunitList" tabindex="2">
+                    <option value="0" disabled selected="selected">-- Select Parent Operation Unit --</option>
+                </select>
+                <span asp-validation-for="ParentOperationUnitId" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="ManagerId" class="col-form-label required-field"></label>
+                <select asp-for="ManagerId" class="form-select" asp-items="@ViewBag.UserList" tabindex="3">
+                    <option value="0" disabled selected="selected">-- Select Manager --</option>
+                </select>
+                <span asp-validation-for="ManagerId" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button type="submit" class="mr-1 shadow-z-2 btn btn-primary" onclick="$.validator.unobtrusive.parse($('form'));" tabindex="4">Change</button>
+        <button type="button" class="mr-1 shadow-z-2 btn btn-secondary" data-bs-dismiss="modal" tabindex="5">Cancel</button>
+    </div>
+</form>

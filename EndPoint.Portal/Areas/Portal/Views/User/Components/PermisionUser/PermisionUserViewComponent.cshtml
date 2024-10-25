@@ -1,0 +1,44 @@
+﻿@addTagHelper *, LazZiya.TagHelpers
+@using Aliasys.Application.Services.InternalServices.SystemServices.Queries.GetSystem.GetSystemAll;
+@model List<ResultGetSystemAllDto>
+
+<table class="table datatable datatable-table table-hover table-responsive-md">
+    <thead>
+        <tr class="table-success">
+            <th style="width:7%;">
+                <a href="#">#</a>
+            </th>
+            <th style="display: none;">
+                <a href="#">Id</a>
+            </th>
+            <th style="width:63%;">
+                <a href="#">System</a>
+            </th>
+            <th style="width:30%;">
+                <a href="#">Permision</a>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            if(item.Id == item.ParentSystemId)
+            {
+                <tr role="row" class="odd table-light" data-index="@(Model.IndexOf(item))">
+                    <td>@(Model.IndexOf(item) + 1)</td>
+                    <td style="display: none;">@item.Id</td>
+                    <td>@item.Name</td>
+                    <td>
+                        <select asp-for="Region" class="form-select" asp-items="@ViewBag.RollList" tabindex="1">
+                            <option value="0" disabled selected="selected">-- Select Permision --</option>
+                        </select>
+                    </td>
+                </tr>
+            }
+            else
+            {
+                   
+            }
+        }
+    </tbody>
+</table>

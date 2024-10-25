@@ -1,0 +1,57 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using Aliasys.Application.Services.InternalServices.OrganizationServices.Commands.CreateOrganization;
+@model RequestCreateOrganizationDto
+
+<form asp-route="createOrganization" autocomplete="off" onsubmit="return jQueryAjaxPost(this);">
+    <div class="row mb-3 mt-4">
+        <div class="col-lg-6 col-md-6 col-sm-12">
+            @{
+                if (Convert.ToBoolean(TempData["OrganizationListCheck"]))
+                {
+                    <div class="form-group mb-3">
+                        <label asp-for="ParentOrganization" class="col-form-label required-field">Parent Organization</label>
+                        <select class="form-select" asp-for="ParentOrganization" asp-items="@ViewBag.OrganizationList" tabindex="1">
+                            <option value="0" disabled selected="selected">-- Select Parent Organization --</option>
+                        </select>
+                        <span asp-validation-for="ParentOrganization" class="text-danger"></span>
+                    </div>
+                }
+            }
+            <div class="form-group mb-3">
+                <label asp-for="Name" class="col-form-label required-field"></label>
+                <input asp-for="Name" class="form-control" placeholder="Enter name" maxlength="30" autofocus tabindex="2" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="DomainName" class="col-form-label required-field"></label>
+                <input asp-for="DomainName" class="form-control" placeholder="Enter domain name" maxlength="30" tabindex="3" />
+                <span asp-validation-for="DomainName" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-12">
+            <div class="form-group mb-3">
+                <label asp-for="Region" class="col-form-label required-field"></label>
+                <select asp-for="Region" class="form-select" asp-items="@ViewBag.RegionList" tabindex="4">
+                    <option value="0" disabled selected="selected">-- Select Region --</option>
+                </select>
+                <span asp-validation-for="Region" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="Phone" class="col-form-label required-field"></label>
+                <input asp-for="Phone" type="number" class="form-control" placeholder="Enter phone" maxlength="20" tabindex="5" />
+                <span asp-validation-for="Phone" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="Address" class="col-form-label required-field"></label>
+                <textarea asp-for="Address" class="form-control" style="height: 100px; resize: none;" placeholder="Enter address" maxlength="200" tabindex="6"></textarea>
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button type="submit" class="mr-1 shadow-z-2 btn btn-success" onclick="$.validator.unobtrusive.parse($('form'));" tabindex="7">Create</button>
+        <button type="button" class="mr-1 shadow-z-2 btn btn-secondary" data-bs-dismiss="modal" tabindex="8">Cancel</button>
+    </div>
+</form>
+

@@ -1,0 +1,364 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using Aliasys.Application.Interfaces.FacadPatterns;
+@using Aliasys.Common.Dtos;
+@using Aliasys.Domain.Entities.ServiceEntities;
+@using EndPoint.Portal.Areas.Portal.Models.ViewModels.RequestLifeCycleViewModel;
+@model ChangeReqLifeCycleViewModel
+@inject IServiceRootCauseFacad _rootCauseFacad
+@inject IServiceSubCauseFacad _subCauseFacad
+<!--Basic Information-->
+<div class="row mt-3">
+    <div class="accordion" id="accReqInfo">
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button bg-darkgray fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#clpReqInfo" aria-expanded="false" aria-controls="clpReqInfo">
+                    Basic Request Information
+                </button>
+            </h2>
+            <div id="clpReqInfo" class="accordion-collapse collapse" data-bs-parent="#accReqInfo">
+                <div class="accordion-body col-12">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <label class="col-form-label fw-bold">Name:</label>&nbsp;
+                            @Model.UserInfo.DisplayName
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <label class="col-form-label fw-bold">Phone No.:</label>&nbsp;
+                            @Model.UserInfo.PhoneNo
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <label class="col-form-label fw-bold">Department:</label>&nbsp;
+                            @Model.UserInfo.OperationUnit
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <label class="col-form-label fw-bold">Ext No.:</label>&nbsp;
+                            @Model.UserInfo.ExtNo
+                        </div>
+                        <hr />
+                        <!--***************************************************************-->
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <label class="col-form-label fw-bold">Request Number:</label>&nbsp;
+                            @Model.ServiceRequest.RequestNumber
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <label class="col-form-label fw-bold">Category:</label>&nbsp;
+                            @Model.ServiceRequest.ServiceCategory
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <label class="col-form-label fw-bold">Request Type:</label>&nbsp;
+                            @Model.ServiceRequest.ServiceRequestType
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <label class="col-form-label fw-bold">Priority:</label>&nbsp;
+                            @Model.ServiceRequest.ServicePriority
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <label class="col-form-label fw-bold">Service Affected:</label>&nbsp;
+                            @(Model.ServiceRequest.ServiceAffected ? "Yes" : "No")
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <label class="col-form-label fw-bold">Impact On:</label>&nbsp;
+                            @Model.ServiceRequest.ImpactOn
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <label class="col-form-label fw-bold">Occure DateTime:</label>&nbsp;
+                            @Model.ServiceRequest.OccuerDateTime
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <label class="col-form-label fw-bold">Title:</label>&nbsp;
+                            @Model.ServiceRequest.Title
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <label class="col-form-label fw-bold">Description:</label>&nbsp;
+                            @Model.ServiceRequestLifeCycles.FirstOrDefault(p => p.PhaseName == "Handle").Description
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <label class="col-form-label fw-bold">File Attachment:</label>&nbsp;
+                            @{
+                                var imageName = Model.ServiceRequestLifeCycles.FirstOrDefault(p => p.PhaseName == "Handle").AttachmentFileName;
+                                string filePath = "/upload/ticket-upload/" + imageName;
+                                if (imageName != null)
+                                {
+                                                <a class="downloadfile" href='@filePath' target="_blank">
+                                                    <img src="~/img/icon/file-attachment.svg" class="img-thumbnail" alt="thumbnail-image">
+                                                </a>
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Request Life Cycle-->
+@{
+    foreach (var item in Model.ServiceRequestLifeCycles.Select((value, i) => new { i, value }))
+    {
+                    <div class="row">
+                        <div class="accordion" id="accReqLifeCycle_@item.i">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button bg-midgray" type="button" data-bs-toggle="collapse" data-bs-target="#clpReqLifeCycle_@item.i" aria-expanded="false" aria-controls="clpReqLifeCycle_@item.i">
+                                        <strong>State:&nbsp;</strong>@item.value.StateName &emsp;&emsp;&emsp;<strong>Phase:&nbsp;</strong>@item.value.PhaseName
+                                    </button>
+                                </h2>
+                                <div id="clpReqLifeCycle_@item.i" class="accordion-collapse collapse" data-bs-parent="#accReqLifeCycle_@item.i">
+                                    <div class="accordion-body col-12">
+                                        <div class="row">
+                                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                                <label class="col-form-label fw-bold">Processing User:</label>&nbsp;
+                                                @if (item.value.PhaseName == "Handle")
+                                    {
+                                                    <span>@Model.ServiceRequest.ServiceCategory</span>
+                                                    <span>&nbsp;Group</span>
+                                    }
+                                    else
+                                    {
+                                                    @item.value.ProcessUser
+                                    }
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                                <label class="col-form-label fw-bold">Assigned User:</label>&nbsp;
+                                                @item.value.AssignedUser
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                                <label class="col-form-label fw-bold">Process Action:</label>&nbsp;
+                                                @item.value.ProcessAction
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                                <label class="col-form-label fw-bold">Creation Time:</label>&nbsp;
+                                                @item.value.CreatedDateTime
+                                            </div>
+                                            @{
+                                    var processAction = item.value.ProcessAction;
+                                    if (processAction != ProcessAction.None && processAction != ProcessAction.Accept && processAction != ProcessAction.Assign)
+                                    {
+                                                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                                                    <label class="col-form-label fw-bold">Root Cause:</label>&nbsp;
+                                                                    @{
+                                                if (item.value.RootCause != null)
+                                                {
+                                                    var rootCause = _rootCauseFacad.GetRootCauseWithIdService.Get(new RequestDto<int>
+                        {
+                            Parameter = item.value.RootCause.Value
+                        });
+                                                                                        <span>@rootCause.Data.ToString()</span>
+                                                }
+                                                                    }
+                                                                </div>
+                                                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                                                    <label class="col-form-label fw-bold">Sub Cuase:</label>&nbsp;
+                                                                    @{
+                                                if (item.value.SubCause != null)
+                                                {
+                                                    var subCuase = _subCauseFacad.GetSubCauseWithIdService.Get(new RequestDto<int>
+                        {
+                            Parameter = item.value.SubCause.Value
+                        });
+                                                                                        <span>@subCuase.Data.ToString()</span>
+                                                }
+                                                                    }
+                                                                </div>
+                                    }
+                                    if (item.value.Description != null)
+                                    {
+                                                                <div class="col-12">
+                                                                    <label class="col-form-label fw-bold">Description:</label>&nbsp;
+                                                                    @item.value.Description
+                                                                </div>
+
+                                    }
+                                    if (item.value.AttachmentFileName != null)
+                                    {
+                                                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                                                    <label class="col-form-label fw-bold">Attachment:</label>&nbsp;
+                                                                    @{
+                                                string file_Path = "/upload/ticket-upload/" + item.value.AttachmentFileName;
+                                                                                    <a class="downloadfile" href='@file_Path' target="_blank">
+                                                                                        <img src="~/img/icon/file-attachment.svg" class="img-thumbnail" alt="thumbnail-image">
+                                                                                    </a>
+                                                                    }
+                                                                </div>
+                                    }
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+    }
+}
+<!--Create Action-->
+<div class="row">
+    <div class="accordion" id="accCreateReqLifeCycle">
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button bg-darkgray fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#clpCreateReqLifeCycle" aria-expanded="false" aria-controls="clpCreateReqLifeCycle">
+                    Review Service Request
+                </button>
+            </h2>
+            <div id="clpCreateReqLifeCycle" class="accordion-collapse collapse" data-bs-parent="#accCreateReqLifeCycle">
+                <div class="accordion-body col-12">
+                    <div class="">
+                        <form asp-route="changeServiceReqLifeCycle" autocomplete="off" enctype="multipart/form-data" method="post">
+                            <div class="row mb-1 mt-2">
+                                <input type="hidden" id="ServiceRequestId" name="ServiceRequestId" value="@Model.ServiceRequest.ReqId" />
+                                <input type="hidden" asp-for="ProcessUserId" value="@Model.ProcessUserId" />
+                                <input type="hidden" id="AssignedUserId" name="AssignedUserId" value="@Model.ProcessUserId" />
+                                <!--********************************************-->
+                                @{
+                                    if (Model.ServiceRequestLifeCycles.LastOrDefault().PhaseName == "Handle")
+                                    {
+                                                    <div class="col-lg-6 col-md-6 col-sm-12">
+                                                        <div class="form-group mb-3">
+                                                            <label asp-for="RequestChangeLifeCycle.ProcessAction" class="col-form-label required-field"></label>
+                                                            <select asp-for="RequestChangeLifeCycle.ProcessAction" id="ProcessAction" name="ProcessAction" class="form-select" asp-items="@ViewBag.ProcessActionForHandle" tabindex="1">
+                                                                <option value="0" disabled selected="selected">-- Select Process Action --</option>
+                                                            </select>
+                                                            <span asp-validation-for="RequestChangeLifeCycle.ProcessAction" class="text-danger"></span>
+                                                        </div>
+                                                    </div>
+                                    }
+                                    else if (Model.ServiceRequestLifeCycles.LastOrDefault().PhaseName == "Process")
+                                    {
+                                                    <div class="col-lg-4 col-md-4 col-sm-12">
+                                                        <div class="form-group mb-3">
+                                                            <label asp-for="RequestChangeLifeCycle.ProcessAction" class="col-form-label required-field"></label>
+                                                            <select asp-for="RequestChangeLifeCycle.ProcessAction" id="ProcessAction" name="ProcessAction" class="form-select" asp-items="@ViewBag.ProcessActionForProcess" tabindex="2">
+                                                                <option value="0" disabled selected="selected">-- Select Process Action --</option>
+                                                            </select>
+                                                            <span asp-validation-for="RequestChangeLifeCycle.ProcessAction" class="text-danger"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-4 col-sm-12" id="divRootCause" style="display: none;">
+                                                        <div class="form-group mb-3">
+                                                            <label asp-for="RequestChangeLifeCycle.RootCause" class="col-form-label required-field"></label>
+                                                            <select asp-for="RequestChangeLifeCycle.RootCause" id="RootCause" name="RootCause" class="form-select" asp-items="@ViewBag.RootCause" tabindex="3" required>
+                                                                <option value="0" disabled selected="selected">-- Select Root Cause --</option>
+                                                            </select>
+                                                            <span asp-validation-for="RequestChangeLifeCycle.RootCause" class="text-danger"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-4 col-sm-12" id="divSubCause" style="display: none;">
+                                                        <div class="form-group mb-3">
+                                                            <label asp-for="RequestChangeLifeCycle.SubCause" class="col-form-label required-field"></label>
+                                                            <select asp-for="RequestChangeLifeCycle.SubCause" id="SubCause" name="SubCause" class="form-select" tabindex="4" required>
+                                                                <option value="0" groupId = 0 disabled selected="selected">-- Select Sub Cause --</option>
+                                                                @{
+                                                                    foreach (var optionItem in ViewBag.SubCause.Items)
+                                                                    {
+                                                                         <option value=@optionItem.Value groupId=@optionItem.GroupId>@optionItem.Text</option>
+                                                                    }
+                                                                }
+                                                            </select>
+                                                            <span asp-validation-for="RequestChangeLifeCycle.SubCause" class="text-danger"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div id="divAssignedUser" class="col-lg-8 col-md-8 col-sm-12" style="display: none;">
+                                                        <div class="form-group mb-3">
+                                                            <label class="col-form-label required-field">Assigned User</label>
+                                                            <select id="drpAssignedUser" name="drpAssignedUser" class="form-select" asp-items="@ViewBag.UserInGroupList" tabindex="5"></select>
+                                                        </div>
+                                                    </div>
+                                    }
+                                }
+                                <div class="col-12">
+                                    <div class="form-group mb-3">
+                                        <label asp-for="RequestChangeLifeCycle.Description" class="col-form-label required-field"></label>
+                                        <textarea asp-for="RequestChangeLifeCycle.Description" id="Description" name="Description" class="form-control enchar" style="height: 150px; resize: none;" placeholder="Enter Description" maxlength="1000" tabindex="6" dir="auto"></textarea>
+                                        <span asp-validation-for="RequestChangeLifeCycle.Description" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    <div class="form-group mb-3">
+                                        <label for="FileAttachment" class="form-label">File Attachment</label>
+                                        <input id="FileAttachment" name="FileAttachment" class="form-control" type="file" tabindex="7">
+                                        <span class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" id="btnSrvReqLifeCycleSubmit" class="mr-1 shadow-z-2 btn btn-info" onclick="$.validator.unobtrusive.parse($('form'));" tabindex="8">Submit</button>&emsp;
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<a type="button" id="btnSrvReqLifeCycleBack" class="mr-1 shadow-z-2 btn btn-secondary w-25 mt-4" asp-area="Portal" asp-controller="ServiceRequestLifeCycle" asp-action="Index" tabindex="5">Back</a>
+
+
+<script asp-append-version="true" src="~/lib/jquery/jquery.min.js"></script>
+<script asp-append-version="true" src="~/lib/jquery-validation/jquery.validate.min.js"></script>
+<script asp-append-version="true" src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+<script asp-append-version="true" src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#ProcessAction').on('change', function () {
+            $('#OriginatorAction').val($("#ProcessAction option:selected").val());
+            var processActionText = $("#ProcessAction option:selected").text();
+            switch (processActionText) {
+                case 'Resolved':
+                    $('#divRootCause').css('display', 'block');
+                    $('#divSubCause').css('display', 'block');
+                    $('#divAssignedUser').css('display', 'none');
+                    $('#AssignedUserId').val(@Model.UserInfo.Id);
+                    break;
+                case 'Update':
+                    $('#divRootCause').css('display', 'block');
+                    $('#divSubCause').css('display', 'block');
+                    $('#divAssignedUser').css('display', 'none');
+                    break;
+                case 'Assign':
+                    $('#divAssignedUser').css('display', 'block');
+                    $('#divRootCause').css('display', 'none');
+                    $('#divSubCause').css('display', 'none');
+                    break;
+            }
+        });
+
+        $('#drpAssignedUser').on('change', function () {
+            $('#AssignedUserId').val($("#drpAssignedUser option:selected").val());
+        });
+
+        $('#divRootCause').on('change', function () {
+            $("#divSubCause option").each(function (index, val) {
+                if (index==0) {
+                    this.selected = "selected";
+                } else { 
+                    this.selected = "";
+                }
+            });            
+
+            var selectedRootId = $("#divRootCause option:selected").val();
+            $("#divSubCause option").each(function (index, val) {
+                if (($(this).attr("groupId") != 0) && ($(this).attr("groupId") != selectedRootId)) {
+                    this.hidden = true;
+                } else { 
+                    this.hidden = false;
+                }
+
+            });
+
+
+
+        });
+
+        $("input[type=file]").change(function () {
+            var file = $(this).prop('files')[0];
+            var findSpan = $(this).closest('div').find("span");
+            if (file.size && file.size > 1000000) {
+                findSpan.text("File must be smaller than 1MB.");
+                $(this).val(null);
+
+            } else {
+                findSpan.text('');
+            }
+        });
+    });
+</script>

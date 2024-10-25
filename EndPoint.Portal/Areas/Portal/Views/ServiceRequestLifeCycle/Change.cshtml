@@ -1,0 +1,7 @@
+﻿@model long
+@{
+    ViewData["Title"] = "Details Service Request";
+    Layout = "~/Areas/Portal/Views/Shared/_LayoutPortal.cshtml";
+}
+
+@await Component.InvokeAsync("ChangeServiceRequestLifeCycle", Model)

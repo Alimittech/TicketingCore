@@ -1,0 +1,25 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using Aliasys.Application.Services.InternalServices.UserRollServices.Commands.CreateUserRoll;
+@model RequestCreateUserRollDto
+
+<form asp-route="createRoll" autocomplete="off" onsubmit="return jQueryAjaxPost(this);">
+    <div class="row mb-3 mt-4">
+        <div class="col-12">
+            <div class="form-group mb-3">
+                <label asp-for="RollName" class="col-form-label required-field"></label>
+                <input asp-for="RollName" class="form-control" placeholder="Enter name" maxlength="50" tabindex="1" />
+                <span asp-validation-for="RollName" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="Description" class="col-form-label required-field"></label>
+                <input asp-for="Description" class="form-control" placeholder="Enter description" maxlength="50" tabindex="2" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button type="submit" class="mr-1 shadow-z-2 btn btn-success" onclick="$.validator.unobtrusive.parse($('form'));" tabindex="2">Create</button>
+        <button type="button" class="mr-1 shadow-z-2 btn btn-secondary" data-bs-dismiss="modal" tabindex="3">Cancel</button>
+    </div>
+</form>

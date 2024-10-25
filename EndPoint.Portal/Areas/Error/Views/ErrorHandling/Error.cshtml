@@ -1,0 +1,31 @@
+﻿@{
+    Layout = "~/Areas/Error/Views/Shared/_LayoutError.cshtml";
+}
+
+<div class="alx-scroll-wrap">
+    <div id="alx-preloader">
+        <div class="cssload-thecube">
+            <div class="cssload-cube cssload-c1"></div>
+            <div class="cssload-cube cssload-c2"></div>
+            <div class="cssload-cube cssload-c4"></div>
+            <div class="cssload-cube cssload-c3"></div>
+        </div>
+    </div>
+    <div id="alx-pagepiling">
+        <section class="alx-vertical-middle pp-scrollable alx-bg-img" data-image="/lib/error/img/bgd3.jpg">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-12">
+                        <div class="alx-heading alx-text-center">
+                            <img src="~/img/logo/logo.png" alt="aliasys-logo" width="250"/>
+                            <h2 class="alx-heading__title" style="margin-top: 50px;">@ViewBag.Title</h2>
+                            <h1 class="alx-heading__description">@ViewBag.Message</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <canvas class="alx-canvas" id="pretty-bg"></canvas>
+        </section>
+    </div>
+    <div class="alx-aside-sidebar__overlay"></div>
+</div>

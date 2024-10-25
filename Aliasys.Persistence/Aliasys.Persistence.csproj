@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Configurations\ServiceConfigs\ChangeManagementConfigs\**" />
+    <EmbeddedResource Remove="Configurations\ServiceConfigs\ChangeManagementConfigs\**" />
+    <None Remove="Configurations\ServiceConfigs\ChangeManagementConfigs\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.5">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Aliasys.Application\Aliasys.Application.csproj" />
+    <ProjectReference Include="..\Aliasys.Domain\Aliasys.Domain.csproj" />
+  </ItemGroup>
+
+</Project>
